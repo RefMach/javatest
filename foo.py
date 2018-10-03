@@ -23,12 +23,17 @@ def full_cv(predict_func, X, y, folds=10, shuffle=True, verbose=True):
         X_train = list(X_folds)
         X_test = X_train.pop(k)
         X_train = np.concatenate(X_train)
-        y_train = list(y_folds)
-        y_train.pop(k)
-        y_train = np.concatenate(y_train)
+        y_train = reshape_y_train(k, y_folds)
         new_y_hat = predict_func(X.ix[X_train], y[y_train], X.ix[X_test])
         y_predict = np.concatenate([y_predict, new_y_hat])
     return compute_score(y[index_shuf], y_predict)
+
+
+def reshape_y_train(k, y_folds):
+    y_train = list(y_folds)
+    y_train.pop(k)
+    y_train = np.concatenate(y_train)
+    return y_train
 
 
 baseline_score = full_cv(predict_baseline, adult, adult.y, verbose=False)
