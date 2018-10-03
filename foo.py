@@ -8,5 +8,5 @@ for row in state:
 
 for row in state:
     if all([a=='x' for a in row]) or all([a=='o' for a in row]):
-        print 'Win'
+        print('Win')
 
